@@ -57,4 +57,10 @@ const deleteEntry = inject(deleteEntryKey)
 .hori > * {
     display: inline-block
 }
+hr {
+    visibility: hidden;
+}
+div ~ div hr {
+    visibility: visible;
+}
 </style>

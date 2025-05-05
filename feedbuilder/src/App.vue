@@ -9,10 +9,10 @@ const data = ref([
 let key = 0
 function addEntry() {
   data.value.push({
-    title: "hello world",
+    title: "",
     link: "",
-    published: 0,
-    updated: 0,
+    published: Date.now(),
+    updated: Date.now(),
     id: "",
     key: key++,
   })
