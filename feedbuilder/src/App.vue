@@ -1,35 +1,51 @@
 <script setup>
+import { reactive } from 'vue';
 import Entry from './components/Entry.vue';
 
-data = [
+const data = reactive([
   {
-    title: "",
+    title: "first",
     link: "",
     published: 0,
     updated: 0,
     id: "",
   },
   {
-    title: "",
+    title: "2nd",
     link: "",
     published: 0,
     updated: 0,
     id: "",
   },
   {
-    title: "",
+    title: "hello world",
     link: "",
     published: 0,
     updated: 0,
     id: "",
   },
-]
+])
+
+let key = 0
+function addEntry() {
+  data.push({
+    title: "hello world",
+    link: "",
+    published: 0,
+    updated: 0,
+    id: "",
+    key: key++,
+  })
+}
+
 </script>
 
 <template>
-  <Entry/>
-  <Entry/>
-  <Entry/>
+  <div style="display: flex; flex-direction: column-reverse;">
+    <div v-for="e in data">
+      <Entry :data="e"/>
+    </div>
+  </div>
 </template>
 
 <style scoped>

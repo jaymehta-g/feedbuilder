@@ -8,13 +8,15 @@ function genUID() {
     return "urn:uuid:" + uuidv4()
 }
 
-const data = reactive({
-    title: "",
-    link: "",
-    published: 0,
-    updated: 0,
-    id: genUID(),
+const props = defineProps({
+    data: Object
 })
+const data = props.data
+
+if (!data.id) {
+    data.id = genUID()
+}
+
 </script>
 
 <template>
@@ -31,7 +33,7 @@ const data = reactive({
         <p>{{ "Updated Time: " + new Date(data.updated).toDateString() }}</p>
         <p>{{ "ID: " + data.id }}</p>
     </div>
-    <div v-if="showInputs" class="hori">
+    <div class="hori" v-else>
         <p>Title: </p> <input v-model="data.title" placeholder="My First Post"></input> <br/>
         <p>URL: </p> <input v-model="data.link" placeholder="https://example.com"></input> <br/>
         <p>Published Time: </p> <button @click="data.published = Date.now()">
