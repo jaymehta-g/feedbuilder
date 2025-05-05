@@ -2,6 +2,7 @@
 import { ref, provide } from 'vue';
 import Entry from './components/Entry.vue';
 import { deleteEntryKey } from './components/keys';
+import { writeXML } from './components/xml';
 
 const data = ref([
 ])
@@ -24,9 +25,14 @@ function deleteEntry(key) {
 
 provide(deleteEntryKey, deleteEntry)
 
+function bruhlol() {
+  alert(writeXML(data.value))
+}
+
 </script>
 
 <template>
+  <button @click="bruhlol()">DEBUG alert feed</button>
   <button @click="addEntry()">New post</button>
   <div v-if="data.length > 0" style="display: flex; flex-direction: column-reverse;">
     <div v-for="e in data" :key="e.key">
