@@ -2,21 +2,17 @@
 import { ref, reactive, vModelCheckbox } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 
-const showInputs = ref(true)
+const showInputs = ref(false)
 
 function genUID() {
     return "urn:uuid:" + uuidv4()
 }
 
-function nowDate() { 
-    return new Date(Date.now()).toISOString().replaceAll('-', '');
-}
-
 const data = reactive({
     title: "",
     link: "",
-    published: nowDate(),
-    updated: nowDate(),
+    published: 0,
+    updated: 0,
     id: genUID(),
 })
 </script>
@@ -24,23 +20,31 @@ const data = reactive({
 <template>
     <input type="checkbox" v-model="showInputs"/>
     <div v-if="!showInputs">
-        <p>{{ "Title: " + data.title }}</p>
-        <p>{{ "Published Time: " + data.published }}</p>
-        <p>{{ "Updated Time: " + data.updated }}</p>
+        <p>{{ !!data.title ? ("Title: " + data.title) : "Untitled" }}</p>
+        <p v-if="data.link">
+            Link: <a :href="data.link" target="_blank" rel="noopener noreferrer">Visit 🔗</a>
+        </p>
+        <p v-if="!data.link">
+            No link specified
+        </p>
+        <p>{{ "Published Time: " + new Date(data.published).toDateString() }}</p>
+        <p>{{ "Updated Time: " + new Date(data.updated).toDateString() }}</p>
         <p>{{ "ID: " + data.id }}</p>
     </div>
     <div v-if="showInputs" class="hori">
-        <p>Title: </p> <input v-model="data.title"></input> <br/>
-        <p>Published Time: </p> <button @click="data.published = nowDate()">
-            {{ "Set to Now: " + data.published  }}
+        <p>Title: </p> <input v-model="data.title" placeholder="My First Post"></input> <br/>
+        <p>URL: </p> <input v-model="data.link" placeholder="https://example.com"></input> <br/>
+        <p>Published Time: </p> <button @click="data.published = Date.now()">
+            {{ "Set to Now  (" + new Date(data.published).toISOString().replaceAll('-', '') + ")" }}
         </button> <br/>
-        <p>Updated Time: </p> <button @click="data.updated = nowDate()">
-            {{ "Set to Now: " + data.updated  }}
+        <p>Updated Time: </p> <button @click="data.updated = Date.now()">
+            {{ "Set to Now  (" + new Date(data.updated).toISOString().replaceAll('-', '') + ")" }}
         </button> <br/>
         <p>ID: </p> <button @click="data.id = genUID()">
             {{ "Reroll " + data.id  }}
         </button> <br/>
     </div>
+    <hr />
 </template>
 
 <style scoped>

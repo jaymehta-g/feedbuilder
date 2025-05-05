@@ -1,10 +1,7 @@
 { pkgs ? import <nixpkgs> {} }:
 pkgs.mkShell {
   packages = with pkgs; [
+    git
     nodejs
-    python3
   ];
-  shellHook = ''
-    echo helloworld
-  '';
 }
