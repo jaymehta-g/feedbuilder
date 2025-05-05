@@ -1,6 +1,7 @@
 <script setup>
-import { ref, reactive, vModelCheckbox } from 'vue'
+import { ref, reactive, vModelCheckbox, inject } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
+import { deleteEntryKey } from './keys'
 
 const showInputs = ref(false)
 
@@ -16,6 +17,8 @@ const data = props.data
 if (!data.id) {
     data.id = genUID()
 }
+
+const deleteEntry = inject(deleteEntryKey)
 
 </script>
 
@@ -45,6 +48,7 @@ if (!data.id) {
         <p>ID: </p> <button @click="data.id = genUID()">
             {{ "Reroll " + data.id  }}
         </button> <br/>
+        <button @click="deleteEntry(data.key)">Delete Entry</button> <br/>
     </div>
     <hr />
 </template>
